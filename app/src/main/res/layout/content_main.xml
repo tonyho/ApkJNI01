@@ -19,19 +19,26 @@
         android:layout_height="wrap_content"
         android:text="LED Control" />
     <Button
+        android:id="@+id/BUTTON"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="All On" />
 
     <CheckBox
+        android:onClick="onCheckboxClicked"
+        android:id="@+id/led1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="led1" />
     <CheckBox
+        android:onClick="onCheckboxClicked"
+        android:id="@+id/led2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="led2" />
     <CheckBox
+        android:onClick="onCheckboxClicked"
+        android:id="@+id/led3"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="led3" />
