@@ -5,12 +5,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
+
+import libledctrl.HWLedCtrl;
 
 public class MainActivity extends AppCompatActivity {
     private Button button = null;
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        HWLedCtrl.ledopen();
+
         led1 = (CheckBox) findViewById(R.id.led1);
         led2 = (CheckBox) findViewById(R.id.led2);
         led3 = (CheckBox) findViewById(R.id.led3);
@@ -47,11 +51,17 @@ public class MainActivity extends AppCompatActivity {
                     led1.setChecked(true);
                     led2.setChecked(true);
                     led3.setChecked(true);
+                    for (int i=0; i<3; i++){
+                        HWLedCtrl.ledctrl(i,1);
+                    }
                 } else{
                     button.setText("ALL ON");
                     led1.setChecked(false);
                     led2.setChecked(false);
                     led3.setChecked(false);
+                    for (int i=0; i<3; i++){
+                        HWLedCtrl.ledctrl(i,0);
+                    }
                 }
             }
         });
@@ -62,25 +72,39 @@ public class MainActivity extends AppCompatActivity {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
 
+        //HWLedCtrl ledctrl = new HWLedCtrl();
+        //ledctrl.ledctrl(1,1);
         // Check which checkbox was clicked
         switch(view.getId()) {
             case R.id.led1:
-                if (checked)
+                if (checked) {
+                    HWLedCtrl.ledctrl(0,1);
                     Toast.makeText(getApplicationContext(), "LED1 checked", Toast.LENGTH_SHORT).show();
-                else
+                }
+                else {
+                    HWLedCtrl.ledctrl(0,0);
                     Toast.makeText(getApplicationContext(), "LED1 unchecked", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.led2:
-                if (checked)
+                if (checked){
+                    HWLedCtrl.ledctrl(1,1);
                     Toast.makeText(getApplicationContext(), "LED2 checked", Toast.LENGTH_SHORT).show();
-                else
+                }
+                else {
+                    HWLedCtrl.ledctrl(1,0);
                     Toast.makeText(getApplicationContext(), "LED2 unchecked", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.led3:
-                if (checked)
+                if (checked) {
+                    HWLedCtrl.ledctrl(2,1);
                     Toast.makeText(getApplicationContext(), "LED3 checked", Toast.LENGTH_SHORT).show();
-                else
+                }
+                else {
+                    HWLedCtrl.ledctrl(2, 1);
                     Toast.makeText(getApplicationContext(), "LED3 unchecked", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
