@@ -12,13 +12,17 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
-import libledctrl.HWLedCtrl;
+import android.os.ILedService;
+import android.os.ServiceManager;
+
+//import libledctrl.HWLedCtrl;
 
 public class MainActivity extends AppCompatActivity {
     private Button button = null;
     private CheckBox led1 = null;
     private CheckBox led2 = null;
     private CheckBox led3 = null;
+    private ILedService iLedService  = null;
     boolean ledon = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        HWLedCtrl.ledopen();
+        iLedService = ILedService.Stub.asInterface(ServiceManager.getService("led"));
+        //iLedService.ledopen();
 
         led1 = (CheckBox) findViewById(R.id.led1);
         led2 = (CheckBox) findViewById(R.id.led2);
@@ -51,16 +56,24 @@ public class MainActivity extends AppCompatActivity {
                     led1.setChecked(true);
                     led2.setChecked(true);
                     led3.setChecked(true);
-                    for (int i=0; i<3; i++){
-                        HWLedCtrl.ledctrl(i,1);
+                    try {
+                        for (int i=0; i<3; i++){
+                            iLedService.ledCtrl(i,1);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 } else{
                     button.setText("ALL ON");
                     led1.setChecked(false);
                     led2.setChecked(false);
                     led3.setChecked(false);
-                    for (int i=0; i<3; i++){
-                        HWLedCtrl.ledctrl(i,0);
+                    try {
+                        for (int i=0; i<3; i++){
+                            iLedService.ledCtrl(i,0);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }
@@ -78,31 +91,55 @@ public class MainActivity extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.led1:
                 if (checked) {
-                    HWLedCtrl.ledctrl(0,1);
+                    try {
+                        iLedService.ledCtrl(0,1);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     Toast.makeText(getApplicationContext(), "LED1 checked", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    HWLedCtrl.ledctrl(0,0);
+                    try {
+                        iLedService.ledCtrl(0,0);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     Toast.makeText(getApplicationContext(), "LED1 unchecked", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.led2:
                 if (checked){
-                    HWLedCtrl.ledctrl(1,1);
+                    try {
+                        iLedService.ledCtrl(1,1);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     Toast.makeText(getApplicationContext(), "LED2 checked", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    HWLedCtrl.ledctrl(1,0);
+                    try {
+                        iLedService.ledCtrl(1,0);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     Toast.makeText(getApplicationContext(), "LED2 unchecked", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.led3:
                 if (checked) {
-                    HWLedCtrl.ledctrl(2,1);
+                    try {
+                        iLedService.ledCtrl(2,1);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     Toast.makeText(getApplicationContext(), "LED3 checked", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    HWLedCtrl.ledctrl(2, 1);
+                    try {
+                        iLedService.ledCtrl(2, 1);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     Toast.makeText(getApplicationContext(), "LED3 unchecked", Toast.LENGTH_SHORT).show();
                 }
                 break;

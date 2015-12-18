@@ -1,0 +1,4 @@
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-verbose
+-ignorewarnings
